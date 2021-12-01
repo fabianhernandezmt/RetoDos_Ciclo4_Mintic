@@ -42,10 +42,10 @@ public class ClotheService {
     public Clothe update(Clothe clothe) {
         
         if (clothe.getReference() != null){
-            Optional<Clothe> clotheDb = clotheRepository.getById(clothe.getCategory());
+            Optional<Clothe> clotheDb = clotheRepository.getById(clothe.getReference());
             if (!clotheDb.isEmpty()){
                 if(clothe.getCategory() != null){
-                    clotheDb.get().setReference(clothe.getReference());            
+                    clotheDb.get().setCategory(clothe.getCategory());            
                 }
                 if(clothe.getSize() != null){
                     clotheDb.get().setSize(clothe.getSize());            
