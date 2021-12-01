@@ -41,17 +41,37 @@ public class ClotheService {
 
     public Clothe update(Clothe clothe) {
         
-        if (clothe.getReference() == null)
-          return clothe;
-      
-      Optional<Clothe> existeClothe = clotheRepository.getById(clothe.getReference());
-      
-      if (existeClothe.isPresent() == false)
-          return null;
+        if (clothe.getReference() != null){
+            Optional<Clothe> clotheDb = clotheRepository.getById(clothe.getCategory());
+            if (!clotheDb.isEmpty()){
+                if(clothe.getCategory() != null){
+                    clotheDb.get().setReference(clothe.getReference());            
+                }
+                if(clothe.getSize() != null){
+                    clotheDb.get().setSize(clothe.getSize());            
+                }
+                if(clothe.getDescription() != null){
+                    clotheDb.get().setDescription(clothe.getDescription());            
+                }
+                clotheDb.get().setPrice(clothe.getPrice());            
+                
+                if(clothe.getQuantity() != null){
+                    clotheDb.get().setQuantity(clothe.getQuantity());            
+                }
+                if(clothe.getPhotography() != null){
+                    clotheDb.get().setPhotography(clothe.getPhotography());            
+                }
+            clotheRepository.save(clotheDb.get());
+            return clotheDb.get();
+            }else{
+                return clothe;
+            }
+        }else{
+            return clothe;
+        }
+    }    
 
-          clotheRepository.save(clothe);
-          return clothe;
-      }
+    
 
 
     public boolean deleteClothe(String reference){
